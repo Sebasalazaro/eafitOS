@@ -1,0 +1,16 @@
+# Archivos compilados
+build/
+*.o
+*.out
+*.exe
+sistema_os
+
+# Documentación generada por Doxygen
+docs/html/
+docs/latex/
+
+# Archivos de editores
+.github/
+
+# Reglas de desarrollo
+DEVNOTES.md
