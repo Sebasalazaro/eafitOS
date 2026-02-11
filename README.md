@@ -32,6 +32,7 @@ Internamente en C, esto se maneja mediante un arreglo de cadenas (`char **args`)
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
+| `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
 | `ayuda` | Ninguno | Muestra la lista de comandos disponibles. | `ayuda` |
 | `salir` | Ninguno | Termina la sesión de EAFITos. | `salir` |
 

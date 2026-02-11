@@ -2,6 +2,15 @@
 
 El objetivo de este archivo es llevar un registro cronológico de las versiones, nuevas funcionalidades y correcciones de errores del sistema operativo.
 
+## [v1.1.0] - 2026-02-11
+### Añadido
+- **Comando `historial`**: Muestra los últimos 10 comandos ejecutados.
+- **Sistema de buffer circular**: Implementación eficiente para el historial.
+- **Archivo `advanced_commands.c`**: Módulo para comandos avanzados.
+
+### Cambios
+- Actualizado `cmd_ayuda()` para incluir el nuevo comando.
+
 ## [v1.0.0] - 2026-02-04
 ### Añadido
 - **Shell Interactiva**: Bucle REPL funcional.
