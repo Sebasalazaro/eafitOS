@@ -49,6 +49,11 @@ void cmd_salir(char **args);
  */
 void cmd_historial(char **args);
 
+/**
+ * @brief Crea un archivo vacío.
+ */
+void cmd_crear(char **args);
+
 // --- Utilidades del Registro de Comandos ---
 
 /**

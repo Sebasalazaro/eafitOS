@@ -21,6 +21,7 @@ void cmd_ayuda(char **args) {
     printf("Comandos disponibles:\n");
     printf("  - listar: Muestra archivos del directorio.\n");
     printf("  - leer <archivo>: Muestra el contenido de un archivo.\n");
+    printf("  - crear <archivo>: Crea un archivo vacío.\n");
     printf("  - tiempo: Muestra la fecha y hora actual.\n");
     printf("  - calc <n1> <op> <n2>: Realiza cálculos simples.\n");
     printf("  - historial: Muestra los últimos 10 comandos ejecutados.\n");
