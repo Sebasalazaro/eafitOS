@@ -26,6 +26,7 @@ char *nombres_comandos[] = {
     "leer",
     "tiempo",
     "calc",
+    "historial",
     "ayuda",
     "salir"
 };
@@ -40,6 +41,7 @@ void (*func_comandos[]) (char **) = {
     &cmd_leer,
     &cmd_tiempo,
     &cmd_calc,
+    &cmd_historial,
     &cmd_ayuda,
     &cmd_salir
 };
@@ -56,6 +58,8 @@ int num_comandos() {
 /**
  * @brief Busca y ejecuta el comando solicitado por el usuario.
  * 
+ * También guarda el comando en el historial si es válido.
+ * 
  * @param args Lista de argumentos parseados. args[0] es el nombre del comando.
  */
 void ejecutar(char **args) {
@@ -68,6 +72,9 @@ void ejecutar(char **args) {
     for (int i = 0; i < num_comandos(); i++) {
         // strcmp: Retorna 0 si dos cadenas son idénticas.
         if (strcmp(args[0], nombres_comandos[i]) == 0) {
+            // Guardar el comando en el historial antes de ejecutarlo
+            agregar_al_historial(args[0]);
+            
             // ¡Coincidencia encontrada! Llamamos a la función a través del puntero.
             (*func_comandos[i])(args);
             return;

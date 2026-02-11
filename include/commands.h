@@ -41,7 +41,21 @@ void cmd_ayuda(char **args);
  */
 void cmd_salir(char **args);
 
+
+//** Implementación de nuevas operaciones */
+
+/**
+ * @brief Muestra el historial de comandos ejecutados.
+ */
+void cmd_historial(char **args);
+
 // --- Utilidades del Registro de Comandos ---
+
+/**
+ * @brief Agrega un comando al historial.
+ * @param comando Cadena con el comando a guardar.
+ */
+void agregar_al_historial(const char *comando);
 
 /**
  * @brief Retorna el número total de comandos registrados.

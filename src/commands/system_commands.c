@@ -2,8 +2,7 @@
  * @file system_commands.c
  * @brief Comandos de utilería del sistema.
  * 
- * Actualmente contiene la calculadora, pero podría expandirse para incluir
- * gestión de procesos o informes de memoria.
+ * Contiene la calculadora y otros comandos básicos del sistema.
  */
 
 #include <stdio.h>
