@@ -5,11 +5,13 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 ## [v1.1.0] - 2026-02-11
 ### Añadido
 - **Comando `historial`**: Muestra los últimos 10 comandos ejecutados.
+- **Comando `crear`**: Crea archivos vacíos en el directorio actual.
 - **Sistema de buffer circular**: Implementación eficiente para el historial.
 - **Archivo `advanced_commands.c`**: Módulo para comandos avanzados.
 
 ### Cambios
-- Actualizado `cmd_ayuda()` para incluir el nuevo comando.
+- Actualizado `cmd_ayuda()` para incluir los nuevos comandos.
+- Reordenados comandos en la tabla de registro alfabéticamente.
 
 ## [v1.0.0] - 2026-02-04
 ### Añadido

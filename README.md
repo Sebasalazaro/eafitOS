@@ -30,6 +30,7 @@ Internamente en C, esto se maneja mediante un arreglo de cadenas (`char **args`)
 | :--- | :--- | :--- | :--- |
 | `listar` | Ninguno | Muestra los archivos del directorio actual. | `listar` |
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
+| `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
 | `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |

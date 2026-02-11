@@ -85,3 +85,43 @@ void cmd_historial(char **args) {
     
     (void)args;
 }
+
+
+/**
+ * @brief Comando CREAR
+ * 
+ * Crea un archivo vacío en el directorio actual.
+ * Si el archivo ya existe, lo sobrescribe sin preguntar.
+ * 
+ * Utiliza fopen() en modo "w" (write), que:
+ * - Crea el archivo si no existe
+ * - Lo trunca (vacía) si ya existe
+ * - Retorna NULL si hay error (ej: permisos insuficientes)
+ * 
+ * @param args args[1] debe contener el nombre del archivo a crear.
+ */
+void cmd_crear(char **args) {
+    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
+    if (args[1] == NULL) {
+        printf("Uso: crear <nombre_archivo>\n");
+        printf("Ejemplo: crear test.txt\n");
+        return;
+    }
+
+    // 2. Intentar crear el archivo
+    // fopen() con modo "w" crea un archivo vacío para escritura
+    FILE *fp = fopen(args[1], "w");
+    
+    // 3. Verificar si hubo error
+    if (fp == NULL) {
+        printf("Error: No se pudo crear el archivo '%s'.\n", args[1]);
+        perror("Razón");
+        return;
+    }
+
+    // 4. Éxito: mensaje de confirmación
+    printf("Archivo '%s' creado correctamente.\n", args[1]);
+    
+    // 5. Cerrar el archivo (crítico para liberar recursos)
+    fclose(fp);
+}
