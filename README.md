@@ -126,7 +126,8 @@ Luego abre `docs/html/index.html` en tu navegador.
 
 ## Equipo de Desarrollo
 
-- **Sebastian Salazar Osorio** - Desarrollo principal y arquitectura
+"One Man Operation :D"
+- **Sebastian Salazar Osorio** - Desarrollo principal, arquitectura, testeo y documentación.
 
 ## Notas de Desarrollo
 
