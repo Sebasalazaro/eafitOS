@@ -1,4 +1,4 @@
-# EAFITos
+# eafitOS
 
 <div align="center">
 
