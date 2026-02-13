@@ -1,30 +1,31 @@
-# EAFITos 🎓
+# EAFITos
 
-**EAFITos** es un sistema operativo educativo diseñado para aprender los fundamentos de la programación de sistemas y la operación interna de una shell utilizando el lenguaje C.
+<div align="center">
 
-## 🚀 Objetivos
-- Entender la **gestión de procesos** y memoria.
-- Aprender sobre **hilos (threads)** y concurrencia.
-- Explorar el **sistema de archivos** y llamadas al sistema (syscalls).
-- Implementar **estructuras de datos básicas** usadas en kernels.
+Un sistema operativo educativo con shell interactiva desarrollado en C para explorar los fundamentos de programación de sistemas, gestión de procesos y estructuras de datos.
 
-## 🐚 La Shell de EAFITos
-El sistema inicia con una interfaz de línea de comandos (Shell) básica que permite interactuar con el sistema.
+<br/>
 
-### ¿Qué son los Argumentos (`args`)?
-En una shell, cuando escribes un comando, a menudo necesitas enviarle información adicional. Esta información se divide en "argumentos".
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white) ![Make](https://img.shields.io/badge/Make-427819?style=for-the-badge&logo=gnu&logoColor=white) ![GCC](https://img.shields.io/badge/GCC-5C6BC0?style=for-the-badge&logo=gnu&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) ![Doxygen](https://img.shields.io/badge/Doxygen-2C4AA8?style=for-the-badge&logo=doxygen&logoColor=white)
 
-Internamente en C, esto se maneja mediante un arreglo de cadenas (`char **args`):
-- **`args[0]`**: Es siempre el nombre del comando (ej. `calc`).
-- **`args[1]`, `args[2]`, etc**: Son los parámetros que le pasas al comando.
+</div>
 
-**Ejemplo en el comando `calc 10 + 5`:**
-- `args[0]` -> `"calc"`
-- `args[1]` -> `"10"`
-- `args[2]` -> `"+"`
-- `args[3]` -> `"5"`
+---
 
-### Comandos Disponibles
+## Descripción del Proyecto
+
+EAFITos es un proyecto académico que implementa una shell interactiva (REPL) con comandos personalizados para gestión de archivos, cálculos matemáticos, historial de comandos y más. El sistema está diseñado siguiendo principios de programación modular en C, con una arquitectura clara que separa las responsabilidades en distintos módulos.
+
+### Alcance Implementado
+
+- ✅ **Shell interactiva** con bucle REPL (Read-Eval-Print-Loop)
+- ✅ **8 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
+- ✅ **Sistema de historial** con buffer circular para últimos 10 comandos
+- ✅ **Interfaz de usuario mejorada** con códigos ANSI para colores y formato
+- ✅ **Arquitectura modular** separando core, comandos y utilidades
+- ✅ **Documentación completa** con Doxygen y guías de usuario
+
+## Comandos Disponibles
 
 | Comando | Argumentos | Descripción | Ejemplo |
 | :--- | :--- | :--- | :--- |
@@ -34,38 +35,112 @@ Internamente en C, esto se maneja mediante un arreglo de cadenas (`char **args`)
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
 | `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
-| `ayuda` | Ninguno | Muestra la lista de comandos disponibles. | `ayuda` |
+| `ayuda` | Ninguno | Muestra la lista de comandos disponibles con formato. | `ayuda` |
 | `salir` | Ninguno | Termina la sesión de EAFITos. | `salir` |
 
-## 🛠️ Estructura del Proyecto
-- `/src`: Código fuente del proyecto (`main.c` contiene el loop principal).
-- `Makefile`: Script para automatizar la compilación.
 
-## ⚡ Cómo compilar y ejecutar
-1. **Compilar**: Ejecuta `make` en la terminal.
-   ```bash
-   make
-   ```
-2. **Ejecutar**: Inicia el sistema.
-   ```bash
-   make run
-   # O directamente:
-   ./build/sistema_os
-   ```
+## Características Técnicas
 
-## 📚 Documentación
+### Sistema de Registro de Comandos
 
-El proyecto incluye un sistema de autodocumentación basado en **Doxygen**. Esto permite generar un sitio web técnico a partir de los comentarios explicativos en el código fuente.
+El proyecto utiliza un sistema basado en arreglos de punteros a función para registrar y ejecutar comandos dinámicamente. Cada comando se implementa como una función `void cmd_nombre(char **args)` y se registra en `shell_loop.c`.
 
-### ¿Qué es Doxyfile?
-El archivo `Doxyfile` contiene la configuración necesaria para que Doxygen entienda cómo analizar nuestro código (C), dónde buscar los archivos y en qué formato generar la salida (HTML).
+### Buffer Circular para Historial
 
-### Cómo generar la documentación
-Si tienes Doxygen instalado en tu sistema:
-1. Asegúrate de estar en la raíz del proyecto.
-2. Ejecuta el comando:
-   ```bash
-   doxygen Doxyfile
-   ```
-3. Esto creará una carpeta `docs/html`. Abre el archivo `docs/html/index.html` en tu navegador para navegar por la documentación interactiva de funciones y estructuras.
+El comando `historial` utiliza una implementación eficiente de buffer circular que mantiene los últimos 10 comandos sin necesidad de desplazar elementos en memoria. Usa aritmética modular para reescribir posiciones antiguas.
 
+### Sistema de UI con Colores ANSI
+
+El módulo `ui.c` proporciona funciones helper para imprimir mensajes con colores:
+- **Errores** en rojo
+- **Éxitos** en verde
+- **Información** en cyan
+- **Prompt** en azul con negrita
+- **Separadores** para organizar visualmente la salida
+
+
+## Inicio Rápido
+
+### Compilación
+
+Limpiar la build pasada
+```bash
+make clean
+```
+
+Crear nueva build
+```bash
+make
+```
+
+### Ejecución
+
+```bash
+make run
+# O directamente:
+./build/sistema_os
+```
+
+### Limpieza de Archivos de Compilación
+
+```bash
+make clean
+```
+
+## Estructura del Proyecto
+
+```
+eafitOS/
+├── src/
+│   ├── core/               # Núcleo del sistema
+│   │   ├── main.c          # Punto de entrada
+│   │   ├── shell_loop.c    # REPL y registro de comandos
+│   │   └── parser.c        # Lectura y parsing de entrada
+│   ├── commands/           # Implementación de comandos
+│   │   ├── basic_commands.c
+│   │   ├── file_commands.c
+│   │   ├── system_commands.c
+│   │   └── advanced_commands.c
+│   └── utils/              # Utilidades compartidas
+│       ├── helpers.c
+│       ├── error_handler.c
+│       ├── memory_manager.c
+│       └── ui.c            # Sistema de colores y formato
+├── include/                # Archivos de cabecera (.h)
+├── build/                  # Archivos compilados
+├── docs/                   # Documentación adicional
+└── tests/                  # Pruebas unitarias e integración
+```
+
+
+
+## Documentación
+
+Para generar la documentación técnica con Doxygen:
+
+```bash
+doxygen Doxyfile
+```
+
+Luego abre `docs/html/index.html` en tu navegador.
+
+## Equipo de Desarrollo
+
+- **Sebastian Salazar Osorio** - Desarrollo principal y arquitectura
+
+## Notas de Desarrollo
+
+- El proyecto está optimizado para compilación en Linux/WSL con GCC
+- Se utiliza aritmética modular en el historial para eficiencia
+- La función `(void)variable;` se usa para suprimir warnings de variables no utilizadas
+- Todos los comentarios siguen formato Doxygen: `/** @brief Descripción */`
+
+## Licencia
+
+Este proyecto es de código abierto bajo la licencia MIT. Ver archivo `LICENSE` para más detalles.
+
+---
+
+**Curso**: Sistemas Operativos  
+**Universidad**: EAFIT  
+**Fecha**: Febrero 2026
