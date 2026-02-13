@@ -11,6 +11,7 @@
 #include <string.h>
 #include "shell.h"
 #include "commands.h"
+#include "ui.h"
 
 /*
  * --- Registro de Comandos ---
@@ -84,7 +85,7 @@ void ejecutar(char **args) {
     }
 
     // Si salimos del ciclo, el comando no existe.
-    printf("Comando desconocido: %s\nEscribe 'ayuda' para ver los comandos.\n", args[0]);
+    imprimir_error("Comando desconocido. Escribe 'ayuda' para ver los comandos.");
 }
 
 /**
@@ -102,7 +103,7 @@ void loop_shell() {
     int status = 1; // Variable de control del bucle
 
     do {
-        printf("EAFITos> ");
+        imprimir_prompt();
         
         // 1. Lectura
         linea = leer_linea();

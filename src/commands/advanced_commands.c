@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h> // Para strcpy, strlen
 #include "commands.h"
+#include "ui.h"      // Colores y formato
 
 // --- Variables Globales para Historial ---
 #define MAX_HISTORIAL 10
@@ -57,11 +58,14 @@ void agregar_al_historial(const char *comando) {
  * @param args Argumentos del comando (ignorados).
  */
 void cmd_historial(char **args) {
-    printf("--- Historial de Comandos ---\n");
+    printf("\n");
+    printf(COLOR_CYAN "=== Historial de Comandos ===" COLOR_RESET "\n");
+    imprimir_separador();
     
     // Si no se han ejecutado comandos aún:
     if (contador_historial == 0) {
-        printf("(El historial está vacío)\n");
+        printf(COLOR_AMARILLO "  (El historial está vacío)\n" COLOR_RESET);
+        printf("\n");
         (void)args;
         return;
     }
@@ -79,10 +83,12 @@ void cmd_historial(char **args) {
             indice += MAX_HISTORIAL;
         }
         
-        // Mostrar con numeración: 1. comando_mas_reciente, 2. anterior, etc.
-        printf("%2d. %s\n", i + 1, historial[indice]);
+        // Mostrar con numeración y color
+        printf(COLOR_VERDE "%2d." COLOR_RESET " %s\n", i + 1, historial[indice]);
     }
     
+    imprimir_separador();
+    printf("\n");
     (void)args;
 }
 
@@ -103,25 +109,29 @@ void cmd_historial(char **args) {
 void cmd_crear(char **args) {
     // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
     if (args[1] == NULL) {
+        imprimir_error("Debes especificar un nombre de archivo");
         printf("Uso: crear <nombre_archivo>\n");
         printf("Ejemplo: crear test.txt\n");
         return;
     }
 
     // 2. Intentar crear el archivo
-    // fopen() con modo "w" crea un archivo vacío para escritura
     FILE *fp = fopen(args[1], "w");
     
     // 3. Verificar si hubo error
     if (fp == NULL) {
-        printf("Error: No se pudo crear el archivo '%s'.\n", args[1]);
+        char mensaje[256];
+        snprintf(mensaje, sizeof(mensaje), "No se pudo crear '%s'", args[1]);
+        imprimir_error(mensaje);
         perror("Razón");
         return;
     }
 
     // 4. Éxito: mensaje de confirmación
-    printf("Archivo '%s' creado correctamente.\n", args[1]);
+    char mensaje[256];
+    snprintf(mensaje, sizeof(mensaje), "Archivo '%s' creado correctamente", args[1]);
+    imprimir_exito(mensaje);
     
-    // 5. Cerrar el archivo (crítico para liberar recursos)
+    // 5. Cerrar el archivo
     fclose(fp);
 }

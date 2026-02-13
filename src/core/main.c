@@ -19,8 +19,10 @@
  * --- Cabeceras Propias ---
  * "shell.h": Incluye los prototipos de las funciones principales del núcleo,
  * como loop_shell(), permitiendo que main() conozca su existencia.
+ * "ui.h": Incluye utilidades para colores y formato de la interfaz.
  */
 #include "shell.h"
+#include "ui.h"
 
 /**
  * @brief Función principal del programa.
@@ -31,9 +33,8 @@
  *         terminó correctamente (EXIT_SUCCESS).
  */
 int main() {
-    // Imprime el mensaje de bienvenida a la salida estándar (stdout)
-    printf("Iniciando EAFITos v1.0...\n");
-    printf("Escribe 'ayuda' para comenzar.\n\n");
+    // Imprimir banner de bienvenida con formato mejorado
+    imprimir_banner();
     
     // Llama al bucle principal de la shell ubicado en src/core/shell_loop.c.
     // Esta función no retornará hasta que el usuario decida salir.

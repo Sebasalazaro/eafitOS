@@ -7,6 +7,7 @@
 #include <stdlib.h> // exit, malloc
 #include <time.h>   // time, localtime, strftime
 #include "commands.h"
+#include "ui.h"     // Colores y formato
 
 /**
  * @brief Comando AYUDA
@@ -17,18 +18,39 @@
  * @param args Argumentos del comando (no se usan aquí, por eso (void)args).
  */
 void cmd_ayuda(char **args) {
-    printf("--- Ayuda de Shell Educativa ---\n");
-    printf("Comandos disponibles:\n");
-    printf("  - listar: Muestra archivos del directorio.\n");
-    printf("  - leer <archivo>: Muestra el contenido de un archivo.\n");
-    printf("  - crear <archivo>: Crea un archivo vacío.\n");
-    printf("  - tiempo: Muestra la fecha y hora actual.\n");
-    printf("  - calc <n1> <op> <n2>: Realiza cálculos simples.\n");
-    printf("  - historial: Muestra los últimos 10 comandos ejecutados.\n");
-    printf("  - ayuda: Muestra este mensaje.\n");
-    printf("  - salir: Termina la sesión.\n");
+    printf("\n");
+    printf(COLOR_CYAN ESTILO_NEGRITA "=== Ayuda de EAFITos ===" COLOR_RESET "\n\n");
     
-    // Silenciar advertencia de compilador sobre variable no usada
+    printf(COLOR_AMARILLO "Comandos disponibles:\n" COLOR_RESET);
+    printf(COLOR_DIM "%s\n" COLOR_RESET, SEPARADOR_LARGO);
+    
+    printf(COLOR_VERDE "  listar" COLOR_RESET "\n");
+    printf("    Muestra archivos del directorio actual\n\n");
+    
+    printf(COLOR_VERDE "  leer <archivo>" COLOR_RESET "\n");
+    printf("    Muestra el contenido de un archivo\n\n");
+    
+    printf(COLOR_VERDE "  crear <archivo>" COLOR_RESET "\n");
+    printf("    Crea un archivo vacío\n\n");
+    
+    printf(COLOR_VERDE "  tiempo" COLOR_RESET "\n");
+    printf("    Muestra la fecha y hora actual\n\n");
+    
+    printf(COLOR_VERDE "  calc <n1> <op> <n2>" COLOR_RESET "\n");
+    printf("    Realiza cálculos simples (+, -, *, /)\n");
+    printf("    Ejemplo: calc 10 + 5\n\n");
+    
+    printf(COLOR_VERDE "  historial" COLOR_RESET "\n");
+    printf("    Muestra los últimos 10 comandos ejecutados\n\n");
+    
+    printf(COLOR_VERDE "  ayuda" COLOR_RESET "\n");
+    printf("    Muestra este mensaje\n\n");
+    
+    printf(COLOR_VERDE "  salir" COLOR_RESET "\n");
+    printf("    Termina la sesión\n\n");
+    
+    printf(COLOR_DIM "%s\n" COLOR_RESET, SEPARADOR_LARGO);
+    
     (void)args;
 }
 

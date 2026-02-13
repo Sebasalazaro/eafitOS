@@ -2,16 +2,37 @@
 
 El objetivo de este archivo es llevar un registro cronológico de las versiones, nuevas funcionalidades y correcciones de errores del sistema operativo.
 
+## [v1.3.0] - 2026-02-13
+### Añadido
+- **Sistema de UI con colores**: Códigos ANSI para mejorar la presentación visual.
+- **Archivo `ui.h`**: Definiciones de colores y estilos ANSI.
+- **Archivo `ui.c`**: Funciones helper de formato (banner, prompt, mensajes).
+- **Separadores visuales**: Para estructurar mejor la salida de comandos.
+
+### Cambios
+- Actualizado `cmd_ayuda()` con formato mejorado y colores.
+- Banner de bienvenida rediseñado con colores y separadores.
+- Prompt del shell ahora en azul y negrita.
+- Mensajes de error en rojo, éxitos en verde, info en cyan.
+- Mejorado formato del comando `historial` con numeración en color.
+
+## [v1.2.0] - 2026-02-12
+### Añadido
+- **Comando `crear`**: Crea archivos vacíos en el directorio actual.
+
+### Cambios
+- Integrado comando `crear` en el registro de comandos.
+- Actualizada documentación del comando `ayuda`.
+
 ## [v1.1.0] - 2026-02-11
 ### Añadido
 - **Comando `historial`**: Muestra los últimos 10 comandos ejecutados.
-- **Comando `crear`**: Crea archivos vacíos en el directorio actual.
 - **Sistema de buffer circular**: Implementación eficiente para el historial.
 - **Archivo `advanced_commands.c`**: Módulo para comandos avanzados.
 
 ### Cambios
-- Actualizado `cmd_ayuda()` para incluir los nuevos comandos.
 - Reordenados comandos en la tabla de registro alfabéticamente.
+- Integración del historial en el bucle principal del shell.
 
 ## [v1.0.0] - 2026-02-04
 ### Añadido
