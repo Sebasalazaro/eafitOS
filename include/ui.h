@@ -25,6 +25,7 @@
 // Estilos
 #define ESTILO_NEGRITA "\x1b[1m"
 #define ESTILO_DIM     "\x1b[2m"
+#define COLOR_DIM      "\x1b[2m"  // Alias para compatibilidad
 
 // Reset (volver a color normal)
 #define COLOR_RESET    "\x1b[0m"
