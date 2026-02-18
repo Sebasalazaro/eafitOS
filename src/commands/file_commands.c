@@ -11,6 +11,7 @@
 #include <string.h>
 #include <dirent.h> // Librería POSIX para manejo de directorios
 #include "commands.h"
+#include "utils.h"  // Funciones helper de validación
 
 /**
  * @brief Comando LISTAR (ls)
@@ -53,9 +54,8 @@ void cmd_listar(char **args) {
  * @param args args[1] debe contener la ruta o nombre del archivo a leer.
  */
 void cmd_leer(char **args) {
-    // Validación básica: ¿El usuario pasó el nombre del archivo?
-    if (args[1] == NULL) {
-        printf("Error: Debes especificar un archivo para leer.\nUso: leer <nombre_archivo>\n");
+    // Validación usando función helper: ¿El usuario pasó el nombre del archivo?
+    if (!validar_argumento(args, 1, "leer <nombre_archivo>")) {
         return;
     }
 

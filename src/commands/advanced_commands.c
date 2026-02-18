@@ -11,6 +11,7 @@
 #include <time.h>       // Para formatear fechas
 #include "commands.h"
 #include "ui.h"         // Colores y formato
+#include "utils.h"      // Funciones helper de formateo
 
 // --- Variables Globales para Historial ---
 #define MAX_HISTORIAL 10
@@ -20,47 +21,6 @@
 static char historial[MAX_HISTORIAL][MAX_CMD_LEN];
 // Contador de comandos totales ejecutados
 static int contador_historial = 0;
-
-// --- Funciones Helper para Manejo de Archivos ---
-
-/**
- * @brief Formatea un tamaño en bytes a una representación legible.
- * 
- * Convierte bytes a la unidad más apropiada (bytes, KB, MB, GB) para facilitar
- * la lectura humana. Esta función es reutilizable en cualquier comando que
- * necesite mostrar tamaños de archivo.
- * 
- * @param bytes Tamaño en bytes a formatear.
- * @param buffer Buffer donde se escribirá el resultado.
- * @param size Tamaño del buffer.
- */
-void formatear_tamano(double bytes, char *buffer, size_t size) {
-    if (bytes < 1024) {
-        snprintf(buffer, size, "%.0f bytes", bytes);
-    } else if (bytes < 1024 * 1024) {
-        snprintf(buffer, size, "%.2f KB", bytes / 1024);
-    } else if (bytes < 1024 * 1024 * 1024) {
-        snprintf(buffer, size, "%.2f MB", bytes / (1024 * 1024));
-    } else {
-        snprintf(buffer, size, "%.2f GB", bytes / (1024 * 1024 * 1024));
-    }
-}
-
-/**
- * @brief Formatea un timestamp UNIX a formato legible dd/mm/yyyy hh:mm:ss.
- * 
- * Convierte un time_t (timestamp UNIX) a una cadena de texto legible.
- * Esta función encapsula la conversión de localtime() + strftime() para
- * reutilización en múltiples comandos.
- * 
- * @param timestamp Timestamp UNIX (segundos desde el epoch).
- * @param buffer Buffer donde se escribirá el resultado.
- * @param size Tamaño del buffer.
- */
-void formatear_fecha(time_t timestamp, char *buffer, size_t size) {
-    struct tm *tm_info = localtime(&timestamp);
-    strftime(buffer, size, "%d/%m/%Y %H:%M:%S", tm_info);
-}
 
 /**
  * @brief Agrega un comando al historial circular.
@@ -150,10 +110,8 @@ void cmd_historial(char **args) {
  * @param args args[1] debe contener el nombre del archivo a crear.
  */
 void cmd_crear(char **args) {
-    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
-    if (args[1] == NULL) {
-        imprimir_error("Debes especificar un nombre de archivo");
-        printf("Uso: crear <nombre_archivo>\n");
+    // 1. Validación usando función helper
+    if (!validar_argumento(args, 1, "crear <nombre_archivo>")) {
         printf("Ejemplo: crear test.txt\n");
         return;
     }
@@ -189,10 +147,8 @@ void cmd_crear(char **args) {
  * @param args args[1] debe contener el nombre del archivo a eliminar.
  */
 void cmd_eliminar(char **args) {
-    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
-    if (args[1] == NULL) {
-        imprimir_error("Debes especificar un archivo para eliminar.");
-        printf("Uso: eliminar <nombre_archivo>\n");
+    // 1. Validación usando función helper
+    if (!validar_argumento(args, 1, "eliminar <nombre_archivo>")) {
         printf("Ejemplo: eliminar test.txt\n");
         return;
     }
@@ -272,10 +228,8 @@ void cmd_eliminar(char **args) {
  * @param args args[1] debe contener el nombre del archivo a inspeccionar.
  */
 void cmd_estadisticas(char **args) {
-    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
-    if (args[1] == NULL) {
-        imprimir_error("Debes especificar un archivo.");
-        printf("Uso: estadisticas <nombre_archivo>\n");
+    // 1. Validación usando función helper
+    if (!validar_argumento(args, 1, "estadisticas <nombre_archivo>")) {
         printf("Ejemplo: estadisticas README.md\n");
         return;
     }
