@@ -6,9 +6,11 @@
  */
 
 #include <stdio.h>
-#include <string.h> // Para strcpy, strlen
+#include <string.h>     // Para strcpy, strlen
+#include <sys/stat.h>   // Para stat() - información de archivos
+#include <time.h>       // Para formatear fechas
 #include "commands.h"
-#include "ui.h"      // Colores y formato
+#include "ui.h"         // Colores y formato
 
 // --- Variables Globales para Historial ---
 #define MAX_HISTORIAL 10
@@ -140,7 +142,7 @@ void cmd_crear(char **args) {
  * @brief Comando ELIMINAR (rm)
  * 
  * Elimina un archivo del sistema de archivos utilizando la función remove().
- * Solicita el nombre del archivo como argumento y valida su existencia antes de eliminarlo.
+ * Versión simple sin confirmación (usa el comando 'estadisticas' para ver info antes).
  * 
  * @param args args[1] debe contener el nombre del archivo a eliminar.
  */
@@ -150,6 +152,7 @@ void cmd_eliminar(char **args) {
         imprimir_error("Debes especificar un archivo para eliminar.");
         printf("Uso: eliminar <nombre_archivo>\n");
         printf("Ejemplo: eliminar test.txt\n");
+        printf("\nTip: Usa 'estadisticas <archivo>' para ver info antes de eliminar.\n");
         return;
     }
 
@@ -159,7 +162,7 @@ void cmd_eliminar(char **args) {
     if (remove(args[1]) == 0) {
         // Éxito: El archivo fue eliminado correctamente
         char mensaje[256];
-        snprintf(mensaje, sizeof(mensaje), "Archivo '%s' ha sido eliminado", args[1]);
+        snprintf(mensaje, sizeof(mensaje), "Archivo '%s' eliminado correctamente", args[1]);
         imprimir_exito(mensaje);
     } else {
         // Error: No se pudo eliminar (archivo no existe, permisos insuficientes, etc.)
@@ -168,4 +171,116 @@ void cmd_eliminar(char **args) {
         imprimir_error(mensaje);
         perror("Razón");
     }
+}
+
+/**
+ * @brief Comando ESTADISTICAS (stat)
+ * 
+ * Muestra información detallada de un archivo utilizando la syscall stat().
+ * Incluye: tamaño, permisos, fechas de acceso/modificación/cambio, inodo, etc.
+ * 
+ * Este comando es útil para:
+ * - Verificar información de un archivo antes de eliminarlo
+ * - Ver metadatos del sistema de archivos
+ * - Aprender cómo el OS almacena información de archivos
+ * 
+ * @param args args[1] debe contener el nombre del archivo a inspeccionar.
+ */
+void cmd_estadisticas(char **args) {
+    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
+    if (args[1] == NULL) {
+        imprimir_error("Debes especificar un archivo.");
+        printf("Uso: estadisticas <nombre_archivo>\n");
+        printf("Ejemplo: estadisticas README.md\n");
+        return;
+    }
+
+    // 2. Obtener información del archivo usando stat()
+    // stat() es una syscall POSIX que retorna metadatos completos de un archivo
+    // struct stat contiene: tamaño, permisos, dueño, fechas, tipo, inodo, etc.
+    struct stat info;
+    
+    // stat(ruta, &estructura): retorna 0 si existe, -1 si no existe o hay error
+    if (stat(args[1], &info) != 0) {
+        char mensaje[256];
+        snprintf(mensaje, sizeof(mensaje), "No se pudo acceder a '%s'", args[1]);
+        imprimir_error(mensaje);
+        perror("Razón");
+        return;
+    }
+
+    // 3. Formatear el tamaño del archivo de manera legible
+    double tamano = (double)info.st_size;
+    char tamano_str[50];
+    
+    if (tamano < 1024) {
+        snprintf(tamano_str, sizeof(tamano_str), "%.0f bytes", tamano);
+    } else if (tamano < 1024 * 1024) {
+        snprintf(tamano_str, sizeof(tamano_str), "%.2f KB (%.0f bytes)", tamano / 1024, tamano);
+    } else if (tamano < 1024 * 1024 * 1024) {
+        snprintf(tamano_str, sizeof(tamano_str), "%.2f MB (%.0f bytes)", tamano / (1024 * 1024), tamano);
+    } else {
+        snprintf(tamano_str, sizeof(tamano_str), "%.2f GB (%.0f bytes)", tamano / (1024 * 1024 * 1024), tamano);
+    }
+
+    // 4. Formatear fechas importantes
+    // localtime() convierte timestamps UNIX a estructuras de tiempo legibles
+    // strftime() formatea la estructura como cadena personalizada
+    char fecha_modificacion[100];
+    char fecha_acceso[100];
+    char fecha_cambio[100];
+    
+    struct tm *tm_info;
+    
+    tm_info = localtime(&info.st_mtime); // Ultima modificación de contenido
+    strftime(fecha_modificacion, sizeof(fecha_modificacion), "%d/%m/%Y %H:%M:%S", tm_info);
+    
+    tm_info = localtime(&info.st_atime); // Ultimo acceso (lectura)
+    strftime(fecha_acceso, sizeof(fecha_acceso), "%d/%m/%Y %H:%M:%S", tm_info);
+    
+    tm_info = localtime(&info.st_ctime); // Ultimo cambio de metadatos
+    strftime(fecha_cambio, sizeof(fecha_cambio), "%d/%m/%Y %H:%M:%S", tm_info);
+
+    // 5. Determinar el tipo de archivo (usando macros de <sys/stat.h>)
+    const char *tipo;
+    if (S_ISREG(info.st_mode)) {
+        tipo = "Archivo regular";
+    } else if (S_ISDIR(info.st_mode)) {
+        tipo = "Directorio";
+    } else if (S_ISLNK(info.st_mode)) {
+        tipo = "Enlace simbólico";
+    } else if (S_ISCHR(info.st_mode)) {
+        tipo = "Dispositivo de caracteres";
+    } else if (S_ISBLK(info.st_mode)) {
+        tipo = "Dispositivo de bloques";
+    } else if (S_ISFIFO(info.st_mode)) {
+        tipo = "FIFO (named pipe)";
+    } else if (S_ISSOCK(info.st_mode)) {
+        tipo = "Socket";
+    } else {
+        tipo = "Desconocido";
+    }
+
+    // 6. Formatear permisos en notación octal (ej: 0644, 0755)
+    unsigned int permisos = info.st_mode & 0777; // Máscara para obtener solo bits de permisos
+
+    // 7. Mostrar toda la información formateada
+    printf("\n");
+    printf(COLOR_CYAN ESTILO_NEGRITA "=== Estadísticas de Archivo ===" COLOR_RESET "\n");
+    imprimir_separador();
+    
+    printf(COLOR_VERDE "Archivo:" COLOR_RESET "           %s\n", args[1]);
+    printf(COLOR_VERDE "Tipo:" COLOR_RESET "              %s\n", tipo);
+    printf(COLOR_VERDE "Tamaño:" COLOR_RESET "            %s\n", tamano_str);
+    printf(COLOR_VERDE "Permisos:" COLOR_RESET "          %04o\n", permisos);
+    printf(COLOR_VERDE "Inodo:" COLOR_RESET "             %lu\n", (unsigned long)info.st_ino);
+    printf(COLOR_VERDE "Enlaces:" COLOR_RESET "           %lu\n", (unsigned long)info.st_nlink);
+    printf("\n");
+    printf(COLOR_AMARILLO "Fechas:\n" COLOR_RESET);
+    printf("  Modificación:      %s\n", fecha_modificacion);
+    printf("  Acceso:            %s\n", fecha_acceso);
+    printf("  Cambio (metadata): %s\n", fecha_cambio);
+    
+    imprimir_separador();
+    printf("\n");
 }

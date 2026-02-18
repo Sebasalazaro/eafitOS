@@ -59,6 +59,11 @@ void cmd_crear(char **args);
  */
 void cmd_eliminar(char **args);
 
+/**
+ * @brief Muestra información detallada de un archivo (tamaño, fechas, permisos).
+ */
+void cmd_estadisticas(char **args);
+
 // --- Utilidades del Registro de Comandos ---
 
 /**

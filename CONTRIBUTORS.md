@@ -24,7 +24,7 @@ Este archivo reconoce a las personas que han contribuido al desarrollo de **EAFI
 - **basic_commands.c**: ayuda, salir, tiempo
 - **file_commands.c**: listar, leer
 - **system_commands.c**: calc
-- **advanced_commands.c**: historial, crear
+- **advanced_commands.c**: historial, crear, eliminar, estadisticas
 
 ### Utilidades (`src/utils/`)
 - **ui.c**: Sistema de colores y formato con ANSI
@@ -34,9 +34,9 @@ Este archivo reconoce a las personas que han contribuido al desarrollo de **EAFI
 
 ## Estadísticas del Proyecto
 
-- **Líneas de código**: ~1000+ líneas
+- **Líneas de código**: ~1200+ líneas
 - **Archivos fuente**: 11 archivos .c
-- **Comandos implementados**: 8
+- **Comandos implementados**: 10
 - **Tiempo de desarrollo**: Febrero 2026
 - **Repositorio**: GitHub
 

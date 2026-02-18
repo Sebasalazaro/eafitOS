@@ -5,12 +5,15 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 ## [v1.4.0] - 2026-02-18
 ### Añadido
 - **Comando `eliminar`**: Permite eliminar archivos del sistema de archivos.
-- **Función `cmd_eliminar()`**: Implementada en `file_commands.c` usando `remove()`.
+- **Comando `estadisticas`**: Muestra información completa de archivos (tamaño, permisos, fechas).
+- **Función `cmd_estadisticas()`**: Usa `stat()` para obtener metadatos del sistema de archivos.
+- **Soporte para múltiples tipos de archivo**: Regular, directorio, enlace, socket, FIFO, dispositivos.
 
 ### Cambios
-- Actualizado `cmd_ayuda()` con información del nuevo comando.
-- Actualizado README.md con 9 comandos funcionales.
-- Integrado comando en el registro de comandos en `shell_loop.c`.
+- Migrado `cmd_eliminar` de `file_commands.c` a `advanced_commands.c` (mejor organización).
+- Actualizado `cmd_ayuda()` con nuevos comandos.
+- Actualizado README.md con 10 comandos funcionales.
+- Sistema de archivos avanzados ahora en `advanced_commands.c`.
 
 ## [v1.3.0] - 2026-02-13
 ### Añadido

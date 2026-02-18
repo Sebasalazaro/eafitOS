@@ -36,6 +36,10 @@ void cmd_ayuda(char **args) {
     printf(COLOR_VERDE "  eliminar <archivo>" COLOR_RESET "\n");
     printf("    Elimina un archivo del sistema\n\n");
     
+    printf(COLOR_VERDE "  estadisticas <archivo>" COLOR_RESET "\n");
+    printf("    Muestra información detallada de un archivo\n");
+    printf("    (tamaño, fechas, permisos, tipo)\n\n");
+    
     printf(COLOR_VERDE "  tiempo" COLOR_RESET "\n");
     printf("    Muestra la fecha y hora actual\n\n");
     

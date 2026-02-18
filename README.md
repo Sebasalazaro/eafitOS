@@ -19,7 +19,7 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 ### Alcance Implementado
 
 - ✅ **Shell interactiva** con bucle REPL (Read-Eval-Print-Loop)
-- ✅ **9 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
+- ✅ **10 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
 - ✅ **Sistema de historial** con buffer circular para últimos 10 comandos
 - ✅ **Interfaz de usuario mejorada** con códigos ANSI para colores y formato
 - ✅ **Arquitectura modular** separando core, comandos y utilidades
@@ -33,6 +33,7 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
 | `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
 | `eliminar` | `<archivo>` | Elimina un archivo del sistema. | `eliminar test.txt` |
+| `estadisticas` | `<archivo>` | Muestra información detallada (tamaño, fechas, permisos). | `estadisticas README.md` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
 | `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
@@ -58,6 +59,15 @@ El módulo `ui.c` proporciona funciones helper para imprimir mensajes con colore
 - **Información** en cyan
 - **Prompt** en azul con negrita
 - **Separadores** para organizar visualmente la salida
+
+### Inspección de Metadatos con stat()
+
+El comando `estadisticas` utiliza la syscall POSIX `stat()` para obtener información completa de archivos:
+- Tamaño con formato legible (bytes, KB, MB, GB)
+- Tipo de archivo (regular, directorio, enlace simbólico, etc.)
+- Permisos en notación octal (ej: 0644, 0755)
+- Número de inodo y enlaces duros
+- Fechas: última modificación, último acceso, cambio de metadatos
 
 
 ## Inicio Rápido
