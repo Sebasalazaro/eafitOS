@@ -1,8 +1,12 @@
-# eafitOS
-
 <div align="center">
 
+# eafitOS
+
 Un sistema operativo educativo con shell interactiva desarrollado en C para explorar los fundamentos de programación de sistemas, gestión de procesos y estructuras de datos.
+
+<br/>
+
+![Demo](docs/OS-working.gif)
 
 <br/>
 
@@ -32,8 +36,8 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 | `listar` | Ninguno | Muestra los archivos del directorio actual. | `listar` |
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
 | `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
+| `estadisticas` | `<archivo>` | Muestra información detallada (tamaño, fechas, permisos). | `estadisticas test.txt` |
 | `eliminar` | `<archivo>` | Elimina un archivo con confirmación interactiva. | `eliminar test.txt` |
-| `estadisticas` | `<archivo>` | Muestra información detallada (tamaño, fechas, permisos). | `estadisticas README.md` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
 | `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
