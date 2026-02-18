@@ -135,3 +135,37 @@ void cmd_crear(char **args) {
     // 5. Cerrar el archivo
     fclose(fp);
 }
+
+/**
+ * @brief Comando ELIMINAR (rm)
+ * 
+ * Elimina un archivo del sistema de archivos utilizando la función remove().
+ * Solicita el nombre del archivo como argumento y valida su existencia antes de eliminarlo.
+ * 
+ * @param args args[1] debe contener el nombre del archivo a eliminar.
+ */
+void cmd_eliminar(char **args) {
+    // Validación: ¿El usuario proporcionó el nombre del archivo?
+    if (args[1] == NULL) {
+        imprimir_error("Debes especificar un archivo para eliminar.");
+        printf("Uso: eliminar <nombre_archivo>\n");
+        printf("Ejemplo: eliminar test.txt\n");
+        return;
+    }
+
+    // remove(): Función estándar de C que elimina el archivo especificado.
+    // Retorna 0 si tuvo éxito, o un valor distinto de 0 si falló.
+    // La función trabaja con el sistema de archivos del OS mediante syscalls.
+    if (remove(args[1]) == 0) {
+        // Éxito: El archivo fue eliminado correctamente
+        char mensaje[256];
+        snprintf(mensaje, sizeof(mensaje), "Archivo '%s' ha sido eliminado", args[1]);
+        imprimir_exito(mensaje);
+    } else {
+        // Error: No se pudo eliminar (archivo no existe, permisos insuficientes, etc.)
+        char mensaje[256];
+        snprintf(mensaje, sizeof(mensaje), "No se pudo eliminar '%s'", args[1]);
+        imprimir_error(mensaje);
+        perror("Razón");
+    }
+}

@@ -54,6 +54,11 @@ void cmd_historial(char **args);
  */
 void cmd_crear(char **args);
 
+/**
+ * @brief Elimina un archivo del sistema.
+ */
+void cmd_eliminar(char **args);
+
 // --- Utilidades del Registro de Comandos ---
 
 /**

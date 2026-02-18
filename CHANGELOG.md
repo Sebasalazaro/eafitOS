@@ -2,6 +2,16 @@
 
 El objetivo de este archivo es llevar un registro cronológico de las versiones, nuevas funcionalidades y correcciones de errores del sistema operativo.
 
+## [v1.4.0] - 2026-02-18
+### Añadido
+- **Comando `eliminar`**: Permite eliminar archivos del sistema de archivos.
+- **Función `cmd_eliminar()`**: Implementada en `file_commands.c` usando `remove()`.
+
+### Cambios
+- Actualizado `cmd_ayuda()` con información del nuevo comando.
+- Actualizado README.md con 9 comandos funcionales.
+- Integrado comando en el registro de comandos en `shell_loop.c`.
+
 ## [v1.3.0] - 2026-02-13
 ### Añadido
 - **Sistema de UI con colores**: Códigos ANSI para mejorar la presentación visual.

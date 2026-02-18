@@ -33,6 +33,9 @@ void cmd_ayuda(char **args) {
     printf(COLOR_VERDE "  crear <archivo>" COLOR_RESET "\n");
     printf("    Crea un archivo vacío\n\n");
     
+    printf(COLOR_VERDE "  eliminar <archivo>" COLOR_RESET "\n");
+    printf("    Elimina un archivo del sistema\n\n");
+    
     printf(COLOR_VERDE "  tiempo" COLOR_RESET "\n");
     printf("    Muestra la fecha y hora actual\n\n");
     

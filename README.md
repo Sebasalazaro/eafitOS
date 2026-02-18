@@ -19,7 +19,7 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 ### Alcance Implementado
 
 - ✅ **Shell interactiva** con bucle REPL (Read-Eval-Print-Loop)
-- ✅ **8 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
+- ✅ **9 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
 - ✅ **Sistema de historial** con buffer circular para últimos 10 comandos
 - ✅ **Interfaz de usuario mejorada** con códigos ANSI para colores y formato
 - ✅ **Arquitectura modular** separando core, comandos y utilidades
@@ -32,6 +32,7 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 | `listar` | Ninguno | Muestra los archivos del directorio actual. | `listar` |
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
 | `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
+| `eliminar` | `<archivo>` | Elimina un archivo del sistema. | `eliminar test.txt` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
 | `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
