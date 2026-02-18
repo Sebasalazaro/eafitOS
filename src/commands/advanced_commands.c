@@ -264,23 +264,26 @@ void cmd_estadisticas(char **args) {
     // 6. Formatear permisos en notación octal (ej: 0644, 0755)
     unsigned int permisos = info.st_mode & 0777; // Máscara para obtener solo bits de permisos
 
-    // 7. Mostrar toda la información formateada
+    // 7. Mostrar toda la información formateada con diseño mejorado
+    const char *separador = "────────────────────────────────────────────────────────────";
+    
     printf("\n");
     printf(COLOR_CYAN ESTILO_NEGRITA "=== Estadísticas de Archivo ===" COLOR_RESET "\n");
-    imprimir_separador();
+    printf(COLOR_DIM "%s" COLOR_RESET "\n", separador);
+
+    printf(COLOR_VERDE "Archivo:" COLOR_RESET "            %s\n", args[1]);
+    printf(COLOR_VERDE "Tipo:" COLOR_RESET "               %s\n", tipo);
+    printf(COLOR_VERDE "Tamaño:" COLOR_RESET "             %s\n", tamano_str);
+    printf(COLOR_VERDE "Permisos:" COLOR_RESET "           %04o\n", permisos);
+    printf(COLOR_VERDE "Inodo:" COLOR_RESET "              %lu\n", (unsigned long)info.st_ino);
+    printf(COLOR_VERDE "Enlaces:" COLOR_RESET "            %lu\n", (unsigned long)info.st_nlink);
     
-    printf(COLOR_VERDE "Archivo:" COLOR_RESET "           %s\n", args[1]);
-    printf(COLOR_VERDE "Tipo:" COLOR_RESET "              %s\n", tipo);
-    printf(COLOR_VERDE "Tamaño:" COLOR_RESET "            %s\n", tamano_str);
-    printf(COLOR_VERDE "Permisos:" COLOR_RESET "          %04o\n", permisos);
-    printf(COLOR_VERDE "Inodo:" COLOR_RESET "             %lu\n", (unsigned long)info.st_ino);
-    printf(COLOR_VERDE "Enlaces:" COLOR_RESET "           %lu\n", (unsigned long)info.st_nlink);
     printf("\n");
-    printf(COLOR_AMARILLO "Fechas:\n" COLOR_RESET);
+    printf(COLOR_VERDE "Fechas:\n" COLOR_RESET);
     printf("  Modificación:      %s\n", fecha_modificacion);
     printf("  Acceso:            %s\n", fecha_acceso);
     printf("  Cambio (metadata): %s\n", fecha_cambio);
     
-    imprimir_separador();
+    printf(COLOR_DIM "%s" COLOR_RESET "\n", separador);
     printf("\n");
 }
