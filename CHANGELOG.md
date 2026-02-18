@@ -4,7 +4,8 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 
 ## [v1.4.0] - 2026-02-18
 ### Añadido
-- **Comando `eliminar`**: Permite eliminar archivos del sistema de archivos.
+- **Comando `eliminar`**: Elimina archivos con confirmación interactiva de seguridad.
+- **Confirmación de seguridad**: Muestra tamaño y fecha de modificación antes de eliminar.
 - **Comando `estadisticas`**: Muestra información completa de archivos (tamaño, permisos, fechas).
 - **Función `cmd_estadisticas()`**: Usa `stat()` para obtener metadatos del sistema de archivos.
 - **Soporte para múltiples tipos de archivo**: Regular, directorio, enlace, socket, FIFO, dispositivos.

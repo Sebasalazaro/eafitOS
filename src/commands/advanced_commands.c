@@ -21,6 +21,47 @@ static char historial[MAX_HISTORIAL][MAX_CMD_LEN];
 // Contador de comandos totales ejecutados
 static int contador_historial = 0;
 
+// --- Funciones Helper para Manejo de Archivos ---
+
+/**
+ * @brief Formatea un tamaño en bytes a una representación legible.
+ * 
+ * Convierte bytes a la unidad más apropiada (bytes, KB, MB, GB) para facilitar
+ * la lectura humana. Esta función es reutilizable en cualquier comando que
+ * necesite mostrar tamaños de archivo.
+ * 
+ * @param bytes Tamaño en bytes a formatear.
+ * @param buffer Buffer donde se escribirá el resultado.
+ * @param size Tamaño del buffer.
+ */
+void formatear_tamano(double bytes, char *buffer, size_t size) {
+    if (bytes < 1024) {
+        snprintf(buffer, size, "%.0f bytes", bytes);
+    } else if (bytes < 1024 * 1024) {
+        snprintf(buffer, size, "%.2f KB", bytes / 1024);
+    } else if (bytes < 1024 * 1024 * 1024) {
+        snprintf(buffer, size, "%.2f MB", bytes / (1024 * 1024));
+    } else {
+        snprintf(buffer, size, "%.2f GB", bytes / (1024 * 1024 * 1024));
+    }
+}
+
+/**
+ * @brief Formatea un timestamp UNIX a formato legible dd/mm/yyyy hh:mm:ss.
+ * 
+ * Convierte un time_t (timestamp UNIX) a una cadena de texto legible.
+ * Esta función encapsula la conversión de localtime() + strftime() para
+ * reutilización en múltiples comandos.
+ * 
+ * @param timestamp Timestamp UNIX (segundos desde el epoch).
+ * @param buffer Buffer donde se escribirá el resultado.
+ * @param size Tamaño del buffer.
+ */
+void formatear_fecha(time_t timestamp, char *buffer, size_t size) {
+    struct tm *tm_info = localtime(&timestamp);
+    strftime(buffer, size, "%d/%m/%Y %H:%M:%S", tm_info);
+}
+
 /**
  * @brief Agrega un comando al historial circular.
  * 
@@ -141,36 +182,80 @@ void cmd_crear(char **args) {
 /**
  * @brief Comando ELIMINAR (rm)
  * 
- * Elimina un archivo del sistema de archivos utilizando la función remove().
- * Versión simple sin confirmación (usa el comando 'estadisticas' para ver info antes).
+ * Elimina un archivo del sistema de archivos con confirmación previa.
+ * Antes de eliminar, muestra información del archivo (tamaño, fecha de modificación)
+ * para que el usuario pueda verificar que es el archivo correcto.
  * 
  * @param args args[1] debe contener el nombre del archivo a eliminar.
  */
 void cmd_eliminar(char **args) {
-    // Validación: ¿El usuario proporcionó el nombre del archivo?
+    // 1. Validación: ¿El usuario proporcionó el nombre del archivo?
     if (args[1] == NULL) {
         imprimir_error("Debes especificar un archivo para eliminar.");
         printf("Uso: eliminar <nombre_archivo>\n");
         printf("Ejemplo: eliminar test.txt\n");
-        printf("\nTip: Usa 'estadisticas <archivo>' para ver info antes de eliminar.\n");
         return;
     }
 
-    // remove(): Función estándar de C que elimina el archivo especificado.
-    // Retorna 0 si tuvo éxito, o un valor distinto de 0 si falló.
-    // La función trabaja con el sistema de archivos del OS mediante syscalls.
-    if (remove(args[1]) == 0) {
-        // Éxito: El archivo fue eliminado correctamente
+    // 2. Obtener información del archivo usando stat()
+    // stat() es una syscall que retorna información detallada de un archivo
+    struct stat info_archivo;
+    
+    // stat(ruta, &estructura): retorna 0 si existe, -1 si no existe o hay error
+    if (stat(args[1], &info_archivo) != 0) {
         char mensaje[256];
-        snprintf(mensaje, sizeof(mensaje), "Archivo '%s' eliminado correctamente", args[1]);
-        imprimir_exito(mensaje);
-    } else {
-        // Error: No se pudo eliminar (archivo no existe, permisos insuficientes, etc.)
-        char mensaje[256];
-        snprintf(mensaje, sizeof(mensaje), "No se pudo eliminar '%s'", args[1]);
+        snprintf(mensaje, sizeof(mensaje), "El archivo '%s' no existe", args[1]);
         imprimir_error(mensaje);
-        perror("Razón");
+        return;
     }
+
+    // 3. Formatear información del archivo usando funciones helper
+    char tamano_str[50];
+    char fecha_str[100];
+    
+    formatear_tamano((double)info_archivo.st_size, tamano_str, sizeof(tamano_str));
+    formatear_fecha(info_archivo.st_mtime, fecha_str, sizeof(fecha_str));
+
+    // 4. Mostrar información del archivo para confirmación
+    printf("\n");
+    printf(COLOR_AMARILLO "⚠ Confirmación de eliminación\n" COLOR_RESET);
+    printf(COLOR_DIM "────────────────────────────────────────────────────────────\n" COLOR_RESET);
+    printf("  " COLOR_CYAN "Archivo:" COLOR_RESET "            %s\n", args[1]);
+    printf("  " COLOR_CYAN "Tamaño:" COLOR_RESET "             %s\n", tamano_str);
+    printf("  " COLOR_CYAN "Última modificación:" COLOR_RESET " %s\n", fecha_str);
+    printf(COLOR_DIM "────────────────────────────────────────────────────────────\n" COLOR_RESET);
+
+    // 5. Pedir confirmación al usuario
+    printf("\n¿Estás seguro de eliminar este archivo? (s/n): ");
+    
+    // Leer respuesta del usuario
+    // getchar() lee un solo carácter desde la entrada estándar
+    char respuesta = getchar();
+    
+    // Limpiar el buffer de entrada (eliminar el '\n' que quedó)
+    while (getchar() != '\n');
+
+    // 6. Verificar respuesta y proceder
+    if (respuesta == 's' || respuesta == 'S' || respuesta == 'y' || respuesta == 'Y') {
+        // Usuario confirmó: proceder a eliminar
+        // remove(): Función estándar de C que elimina el archivo (syscall unlink/remove)
+        if (remove(args[1]) == 0) {
+            char mensaje[256];
+            snprintf(mensaje, sizeof(mensaje), "Archivo '%s' eliminado correctamente", args[1]);
+            imprimir_exito(mensaje);
+        } else {
+            // Este caso es raro si stat() funcionó, pero puede pasar (permisos, disco lleno, etc.)
+            char mensaje[256];
+            snprintf(mensaje, sizeof(mensaje), "Error inesperado al eliminar '%s'", args[1]);
+            imprimir_error(mensaje);
+            perror("Razón");
+        }
+    } else {
+        // Usuario canceló la operación
+        imprimir_info("Operación cancelada. No se eliminó ningún archivo.");
+    }
+    
+    printf("\n");
 }
 
 /**
@@ -209,37 +294,18 @@ void cmd_estadisticas(char **args) {
         return;
     }
 
-    // 3. Formatear el tamaño del archivo de manera legible
-    double tamano = (double)info.st_size;
+    // 3. Formatear el tamaño usando la función helper
     char tamano_str[50];
-    
-    if (tamano < 1024) {
-        snprintf(tamano_str, sizeof(tamano_str), "%.0f bytes", tamano);
-    } else if (tamano < 1024 * 1024) {
-        snprintf(tamano_str, sizeof(tamano_str), "%.2f KB (%.0f bytes)", tamano / 1024, tamano);
-    } else if (tamano < 1024 * 1024 * 1024) {
-        snprintf(tamano_str, sizeof(tamano_str), "%.2f MB (%.0f bytes)", tamano / (1024 * 1024), tamano);
-    } else {
-        snprintf(tamano_str, sizeof(tamano_str), "%.2f GB (%.0f bytes)", tamano / (1024 * 1024 * 1024), tamano);
-    }
+    formatear_tamano((double)info.st_size, tamano_str, sizeof(tamano_str));
 
-    // 4. Formatear fechas importantes
-    // localtime() convierte timestamps UNIX a estructuras de tiempo legibles
-    // strftime() formatea la estructura como cadena personalizada
+    // 4. Formatear las 3 fechas importantes usando la función helper
     char fecha_modificacion[100];
     char fecha_acceso[100];
     char fecha_cambio[100];
     
-    struct tm *tm_info;
-    
-    tm_info = localtime(&info.st_mtime); // Ultima modificación de contenido
-    strftime(fecha_modificacion, sizeof(fecha_modificacion), "%d/%m/%Y %H:%M:%S", tm_info);
-    
-    tm_info = localtime(&info.st_atime); // Ultimo acceso (lectura)
-    strftime(fecha_acceso, sizeof(fecha_acceso), "%d/%m/%Y %H:%M:%S", tm_info);
-    
-    tm_info = localtime(&info.st_ctime); // Ultimo cambio de metadatos
-    strftime(fecha_cambio, sizeof(fecha_cambio), "%d/%m/%Y %H:%M:%S", tm_info);
+    formatear_fecha(info.st_mtime, fecha_modificacion, sizeof(fecha_modificacion)); // Ultima modificación
+    formatear_fecha(info.st_atime, fecha_acceso, sizeof(fecha_acceso));             // Ultimo acceso
+    formatear_fecha(info.st_ctime, fecha_cambio, sizeof(fecha_cambio));             // Cambio de metadatos
 
     // 5. Determinar el tipo de archivo (usando macros de <sys/stat.h>)
     const char *tipo;

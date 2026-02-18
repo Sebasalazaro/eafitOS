@@ -32,7 +32,7 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 | `listar` | Ninguno | Muestra los archivos del directorio actual. | `listar` |
 | `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
 | `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
-| `eliminar` | `<archivo>` | Elimina un archivo del sistema. | `eliminar test.txt` |
+| `eliminar` | `<archivo>` | Elimina un archivo con confirmación interactiva. | `eliminar test.txt` |
 | `estadisticas` | `<archivo>` | Muestra información detallada (tamaño, fechas, permisos). | `estadisticas README.md` |
 | `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
