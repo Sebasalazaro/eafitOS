@@ -10,50 +10,50 @@
 #include "ui.h"     // Colores y formato
 
 /**
- * @brief Comando AYUDA
+ * @brief Comando HELP
  * 
  * Muestra al usuario la lista de acciones que puede realizar.
  * Es fundamental para la usabilidad de la shell.
  * 
  * @param args Argumentos del comando (no se usan aquí, por eso (void)args).
  */
-void cmd_ayuda(char **args) {
+void cmd_help(char **args) {
     printf("\n");
     printf(COLOR_CYAN ESTILO_NEGRITA "=== Ayuda de EAFITos ===" COLOR_RESET "\n\n");
     
     printf(COLOR_AMARILLO "Comandos disponibles:\n" COLOR_RESET);
     printf(COLOR_DIM "%s\n" COLOR_RESET, SEPARADOR_LARGO);
     
-    printf(COLOR_VERDE "  listar" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  list" COLOR_RESET "\n");
     printf("    Muestra archivos del directorio actual\n\n");
     
-    printf(COLOR_VERDE "  leer <archivo>" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  read <file>" COLOR_RESET "\n");
     printf("    Muestra el contenido de un archivo\n\n");
     
-    printf(COLOR_VERDE "  crear <archivo>" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  create <file>" COLOR_RESET "\n");
     printf("    Crea un archivo vacío\n\n");
     
-    printf(COLOR_VERDE "  eliminar <archivo>" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  remove <file>" COLOR_RESET "\n");
     printf("    Elimina un archivo del sistema\n\n");
     
-    printf(COLOR_VERDE "  estadisticas <archivo>" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  stats <file>" COLOR_RESET "\n");
     printf("    Muestra información detallada de un archivo\n");
     printf("    (tamaño, fechas, permisos, tipo)\n\n");
     
-    printf(COLOR_VERDE "  tiempo" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  time" COLOR_RESET "\n");
     printf("    Muestra la fecha y hora actual\n\n");
     
     printf(COLOR_VERDE "  calc <n1> <op> <n2>" COLOR_RESET "\n");
     printf("    Realiza cálculos simples (+, -, *, /)\n");
     printf("    Ejemplo: calc 10 + 5\n\n");
     
-    printf(COLOR_VERDE "  historial" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  history" COLOR_RESET "\n");
     printf("    Muestra los últimos 10 comandos ejecutados\n\n");
     
-    printf(COLOR_VERDE "  ayuda" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  help" COLOR_RESET "\n");
     printf("    Muestra este mensaje\n\n");
     
-    printf(COLOR_VERDE "  salir" COLOR_RESET "\n");
+    printf(COLOR_VERDE "  exit" COLOR_RESET "\n");
     printf("    Termina la sesión\n\n");
     
     printf(COLOR_DIM "%s\n" COLOR_RESET, SEPARADOR_LARGO);
@@ -62,14 +62,14 @@ void cmd_ayuda(char **args) {
 }
 
 /**
- * @brief Comando SALIR
+ * @brief Comando EXIT
  * 
  * Finaliza la ejecución del programa de forma controlada.
  * Utiliza la llamada al sistema exit().
  * 
  * @param args Argumentos del comando (ignorados).
  */
-void cmd_salir(char **args) {
+void cmd_exit(char **args) {
     printf("Saliendo de la shell...\n");
     // exit(0) devuelve el código 0 al sistema operativo padre,
     // indicando que el proceso terminó sin errores.
@@ -78,14 +78,14 @@ void cmd_salir(char **args) {
 }
 
 /**
- * @brief Comando TIEMPO (date)
+ * @brief Comando TIME (date)
  * 
  * Obtiene y formatea la fecha y hora del sistema.
  * Demuestra el uso de la librería estándar <time.h>.
  * 
  * @param args Argumentos del comando (ignorados).
  */
-void cmd_tiempo(char **args) {
+void cmd_time(char **args) {
     // 1. Obtener tiempo "crudo" (segundos desde 1970 - Epoch Unix)
     time_t t = time(NULL);
     

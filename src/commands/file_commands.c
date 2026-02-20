@@ -14,13 +14,13 @@
 #include "utils.h"  // Funciones helper de validación
 
 /**
- * @brief Comando LISTAR (ls)
+ * @brief Comando LIST (ls)
  * 
  * Abre el directorio actual (".") e itera sobre sus entradas para mostrar los nombres.
  * 
  * @param args Argumentos del comando (ignorados en esta versión simple).
  */
-void cmd_listar(char **args) {
+void cmd_list(char **args) {
     DIR *d;               // Puntero al flujo del directorio
     struct dirent *dir;   // Estructura que representa una entrada (archivo/carpeta)
 
@@ -46,16 +46,16 @@ void cmd_listar(char **args) {
 }
 
 /**
- * @brief Comando LEER (cat)
+ * @brief Comando READ (cat)
  * 
  * Abre un archivo en modo lectura, lee su contenido caracter por caracter
  * y lo imprime en la terminal.
  * 
  * @param args args[1] debe contener la ruta o nombre del archivo a leer.
  */
-void cmd_leer(char **args) {
+void cmd_read(char **args) {
     // Validación usando función helper: ¿El usuario pasó el nombre del archivo?
-    if (!validar_argumento(args, 1, "leer <nombre_archivo>")) {
+    if (!validar_argumento(args, 1, "read <file>")) {
         return;
     }
 

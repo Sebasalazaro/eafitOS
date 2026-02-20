@@ -33,16 +33,16 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 
 | Comando | Argumentos | Descripción | Ejemplo |
 | :--- | :--- | :--- | :--- |
-| `listar` | Ninguno | Muestra los archivos del directorio actual. | `listar` |
-| `leer` | `<archivo>` | Muestra el contenido de un archivo de texto. | `leer README.md` |
-| `crear` | `<archivo>` | Crea un archivo vacío. | `crear test.txt` |
-| `estadisticas` | `<archivo>` | Muestra información detallada (tamaño, fechas, permisos). | `estadisticas test.txt` |
-| `eliminar` | `<archivo>` | Elimina un archivo con confirmación interactiva. | `eliminar test.txt` |
-| `tiempo` | Ninguno | Muestra la fecha y hora actual del sistema. | `tiempo` |
+| `list` | Ninguno | Lista los archivos del directorio actual. | `list` |
+| `read` | `<file>` | Muestra el contenido de un archivo de texto. | `read README.md` |
+| `create` | `<file>` | Crea un archivo vacío. | `create test.txt` |
+| `remove` | `<file>` | Elimina un archivo con confirmación interactiva. | `remove test.txt` |
+| `stats` | `<file>` | Muestra información detallada (tamaño, fechas, permisos). | `stats test.txt` |
+| `time` | Ninguno | Muestra la fecha y hora actual del sistema. | `time` |
 | `calc` | `<n1> <op> <n2>` | Realiza operaciones aritméticas (+, -, *, /). | `calc 10 * 2.5` |
-| `historial` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `historial` |
-| `ayuda` | Ninguno | Muestra la lista de comandos disponibles con formato. | `ayuda` |
-| `salir` | Ninguno | Termina la sesión de EAFITos. | `salir` |
+| `history` | Ninguno | Muestra los últimos 10 comandos ejecutados. | `history` |
+| `help` | Ninguno | Muestra la lista de comandos disponibles con formato. | `help` |
+| `exit` | Ninguno | Termina la sesión de EAFITos. | `exit` |
 
 
 ## Características Técnicas
@@ -53,7 +53,7 @@ El proyecto utiliza un sistema basado en arreglos de punteros a función para re
 
 ### Buffer Circular para Historial
 
-El comando `historial` utiliza una implementación eficiente de buffer circular que mantiene los últimos 10 comandos sin necesidad de desplazar elementos en memoria. Usa aritmética modular para reescribir posiciones antiguas.
+El comando `history` utiliza una implementación eficiente de buffer circular que mantiene los últimos 10 comandos sin necesidad de desplazar elementos en memoria. Usa aritmética modular para reescribir posiciones antiguas.
 
 ### Sistema de UI con Colores ANSI
 
@@ -66,7 +66,7 @@ El módulo `ui.c` proporciona funciones helper para imprimir mensajes con colore
 
 ### Inspección de Metadatos con stat()
 
-El comando `estadisticas` utiliza la syscall POSIX `stat()` para obtener información completa de archivos:
+El comando `stats` utiliza la syscall POSIX `stat()` para obtener información completa de archivos:
 - Tamaño con formato legible (bytes, KB, MB, GB)
 - Tipo de archivo (regular, directorio, enlace simbólico, etc.)
 - Permisos en notación octal (ej: 0644, 0755)

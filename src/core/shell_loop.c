@@ -23,16 +23,16 @@
  */
 
 char *nombres_comandos[] = {
-    "listar",
-    "leer",
-    "crear",
-    "eliminar",
-    "estadisticas",
-    "tiempo",
+    "list",
+    "read",
+    "create",
+    "remove",
+    "stats",
+    "time",
     "calc",
-    "historial",
-    "ayuda",
-    "salir"
+    "history",
+    "help",
+    "exit"
 };
 
 /*
@@ -41,16 +41,16 @@ char *nombres_comandos[] = {
  * y recibe como parámetro un arreglo de cadenas (char **)".
  */
 void (*func_comandos[]) (char **) = {
-    &cmd_listar,
-    &cmd_leer,
-    &cmd_crear,
-    &cmd_eliminar,
-    &cmd_estadisticas,
-    &cmd_tiempo,
+    &cmd_list,
+    &cmd_read,
+    &cmd_create,
+    &cmd_remove,
+    &cmd_stats,
+    &cmd_time,
     &cmd_calc,
-    &cmd_historial,
-    &cmd_ayuda,
-    &cmd_salir
+    &cmd_history,
+    &cmd_help,
+    &cmd_exit
 };
 
 /**

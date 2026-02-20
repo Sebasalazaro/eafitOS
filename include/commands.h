@@ -11,20 +11,37 @@
 
 // --- Prototipos de Comandos ---
 
+// File Commands
 /**
  * @brief Lista los archivos del directorio actual.
  */
-void cmd_listar(char **args);
+void cmd_list(char **args);
 
 /**
  * @brief Lee y muestra el contenido de un archivo.
  */
-void cmd_leer(char **args);
+void cmd_read(char **args);
 
+/**
+ * @brief Crea un archivo vacío.
+ */
+void cmd_create(char **args);
+
+/**
+ * @brief Elimina un archivo del sistema.
+ */
+void cmd_remove(char **args);
+
+/**
+ * @brief Muestra información detallada de un archivo (tamaño, fechas, permisos).
+ */
+void cmd_stats(char **args);
+
+// System Commands
 /**
  * @brief Muestra la hora del sistema.
  */
-void cmd_tiempo(char **args);
+void cmd_time(char **args);
 
 /**
  * @brief Realiza operaciones matemáticas simples.
@@ -32,37 +49,20 @@ void cmd_tiempo(char **args);
 void cmd_calc(char **args);
 
 /**
+ * @brief Muestra el historial de comandos ejecutados.
+ */
+void cmd_history(char **args);
+
+// Basic Commands
+/**
  * @brief Muestra la lista de ayuda.
  */
-void cmd_ayuda(char **args);
+void cmd_help(char **args);
 
 /**
  * @brief Termina la ejecución de la shell.
  */
-void cmd_salir(char **args);
-
-
-//** Implementación de nuevas operaciones */
-
-/**
- * @brief Muestra el historial de comandos ejecutados.
- */
-void cmd_historial(char **args);
-
-/**
- * @brief Crea un archivo vacío.
- */
-void cmd_crear(char **args);
-
-/**
- * @brief Elimina un archivo del sistema.
- */
-void cmd_eliminar(char **args);
-
-/**
- * @brief Muestra información detallada de un archivo (tamaño, fechas, permisos).
- */
-void cmd_estadisticas(char **args);
+void cmd_exit(char **args);
 
 // --- Utilidades del Registro de Comandos ---
 

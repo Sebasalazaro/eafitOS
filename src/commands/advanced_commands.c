@@ -54,13 +54,13 @@ void agregar_al_historial(const char *comando) {
 }
 
 /**
- * @brief Comando HISTORIAL
+ * @brief Comando HISTORY
  * 
  * Muestra los últimos 10 comandos ejecutados, numerados del más reciente al más antiguo.
  * 
  * @param args Argumentos del comando (ignorados).
  */
-void cmd_historial(char **args) {
+void cmd_history(char **args) {
     printf("\n");
     printf(COLOR_CYAN "=== Historial de Comandos ===" COLOR_RESET "\n");
     imprimir_separador();
@@ -97,7 +97,7 @@ void cmd_historial(char **args) {
 
 
 /**
- * @brief Comando CREAR
+ * @brief Comando CREATE
  * 
  * Crea un archivo vacío en el directorio actual.
  * Si el archivo ya existe, lo sobrescribe sin preguntar.
@@ -109,10 +109,10 @@ void cmd_historial(char **args) {
  * 
  * @param args args[1] debe contener el nombre del archivo a crear.
  */
-void cmd_crear(char **args) {
+void cmd_create(char **args) {
     // 1. Validación usando función helper
-    if (!validar_argumento(args, 1, "crear <nombre_archivo>")) {
-        printf("Ejemplo: crear test.txt\n");
+    if (!validar_argumento(args, 1, "create <file>")) {
+        printf("Ejemplo: create test.txt\n");
         return;
     }
 
@@ -138,7 +138,7 @@ void cmd_crear(char **args) {
 }
 
 /**
- * @brief Comando ELIMINAR (rm)
+ * @brief Comando REMOVE (rm)
  * 
  * Elimina un archivo del sistema de archivos con confirmación previa.
  * Antes de eliminar, muestra información del archivo (tamaño, fecha de modificación)
@@ -146,10 +146,10 @@ void cmd_crear(char **args) {
  * 
  * @param args args[1] debe contener el nombre del archivo a eliminar.
  */
-void cmd_eliminar(char **args) {
+void cmd_remove(char **args) {
     // 1. Validación usando función helper
-    if (!validar_argumento(args, 1, "eliminar <nombre_archivo>")) {
-        printf("Ejemplo: eliminar test.txt\n");
+    if (!validar_argumento(args, 1, "remove <file>")) {
+        printf("Ejemplo: remove test.txt\n");
         return;
     }
 
@@ -215,7 +215,7 @@ void cmd_eliminar(char **args) {
 }
 
 /**
- * @brief Comando ESTADISTICAS (stat)
+ * @brief Comando STATS (stat)
  * 
  * Muestra información detallada de un archivo utilizando la syscall stat().
  * Incluye: tamaño, permisos, fechas de acceso/modificación/cambio, inodo, etc.
@@ -227,10 +227,10 @@ void cmd_eliminar(char **args) {
  * 
  * @param args args[1] debe contener el nombre del archivo a inspeccionar.
  */
-void cmd_estadisticas(char **args) {
+void cmd_stats(char **args) {
     // 1. Validación usando función helper
-    if (!validar_argumento(args, 1, "estadisticas <nombre_archivo>")) {
-        printf("Ejemplo: estadisticas README.md\n");
+    if (!validar_argumento(args, 1, "stats <file>")) {
+        printf("Ejemplo: stats README.md\n");
         return;
     }
 
