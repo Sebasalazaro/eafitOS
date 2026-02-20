@@ -192,7 +192,7 @@ void cmd_remove(char **args) {
     while (getchar() != '\n');
 
     // 6. Verificar respuesta y proceder
-    if (respuesta == 's' || respuesta == 'S' || respuesta == 'y' || respuesta == 'Y') {
+    if (respuesta == 'y' || respuesta == 'Y') {
         // Usuario confirmó: proceder a eliminar
         // remove(): Función estándar de C que elimina el archivo (syscall unlink/remove)
         if (remove(args[1]) == 0) {
