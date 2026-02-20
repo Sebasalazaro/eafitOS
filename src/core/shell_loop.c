@@ -89,7 +89,7 @@ void ejecutar(char **args) {
     }
 
     // Si salimos del ciclo, el comando no existe.
-    imprimir_error("Comando desconocido. Escribe 'ayuda' para ver los comandos.");
+    imprimir_error("Comando desconocido. Escribe 'help' para ver los comandos.");
 }
 
 /**

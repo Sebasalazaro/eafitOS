@@ -2,6 +2,27 @@
 
 El objetivo de este archivo es llevar un registro cronológico de las versiones, nuevas funcionalidades y correcciones de errores del sistema operativo.
 
+## [v1.5.0] - 2026-02-20
+### Cambios (Refactorización)
+- **Refactorización completa de nomenclatura**: Migración de comandos en español a inglés.
+  - `listar` → `list`
+  - `leer` → `read`
+  - `crear` → `create`
+  - `eliminar` → `remove`
+  - `estadisticas` → `stats`
+  - `tiempo` → `time`
+  - `historial` → `history`
+  - `ayuda` → `help`
+  - `salir` → `exit`
+- **Funciones renombradas**: Todas las funciones `cmd_*` ahora usan nombres en inglés.
+- **Mensajes de validación actualizados**: Uso de sintaxis en inglés (`<file>` en lugar de `<archivo>`).
+- **Documentación actualizada**: README.md actualizado con nuevos nombres de comandos.
+
+### Mejoras
+- Mayor consistencia con convenciones de shells Unix/Linux.
+- Nomenclatura más descriptiva y con mayor facilidad para el usuario
+
+
 ## [v1.4.0] - 2026-02-18
 ### Añadido
 - **Comando `eliminar`**: Elimina archivos con confirmación interactiva de seguridad.
@@ -15,6 +36,7 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 - Actualizado `cmd_ayuda()` con nuevos comandos.
 - Actualizado README.md con 10 comandos funcionales.
 - Sistema de archivos avanzados ahora en `advanced_commands.c`.
+
 
 ## [v1.3.0] - 2026-02-13
 ### Añadido
@@ -30,6 +52,7 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 - Mensajes de error en rojo, éxitos en verde, info en cyan.
 - Mejorado formato del comando `historial` con numeración en color.
 
+
 ## [v1.2.0] - 2026-02-12
 ### Añadido
 - **Comando `crear`**: Crea archivos vacíos en el directorio actual.
@@ -37,6 +60,7 @@ El objetivo de este archivo es llevar un registro cronológico de las versiones,
 ### Cambios
 - Integrado comando `crear` en el registro de comandos.
 - Actualizada documentación del comando `ayuda`.
+
 
 ## [v1.1.0] - 2026-02-11
 ### Añadido

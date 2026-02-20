@@ -28,7 +28,7 @@ void imprimir_banner(void) {
     printf(COLOR_RESET);
     
     printf(COLOR_DIM);
-    printf("  Escribe 'ayuda' para ver los comandos\n");
+    printf("  Escribe 'help' para ver los comandos\n");
     printf(COLOR_RESET);
     
     printf(COLOR_CYAN);
