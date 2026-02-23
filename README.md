@@ -2,7 +2,8 @@
 
 # eafitOS
 
-Un sistema operativo educativo con shell interactiva desarrollado en C para explorar los fundamentos de programación de sistemas, gestión de procesos y estructuras de datos.
+**A powerful educational operating system featuring an interactive shell built in C.**  
+Explore system programming fundamentals, process management, and data structures through hands-on implementation of Unix-like commands with modern UI enhancements.
 
 <br/>
 
@@ -22,12 +23,14 @@ EAFITos es un proyecto académico que implementa una shell interactiva (REPL) co
 
 ### Alcance Implementado
 
-- ✅ **Shell interactiva** con bucle REPL (Read-Eval-Print-Loop)
-- ✅ **10 comandos funcionales** incluyendo gestión de archivos, cálculos y utilidades
-- ✅ **Sistema de historial** con buffer circular para últimos 10 comandos
-- ✅ **Interfaz de usuario mejorada** con códigos ANSI para colores y formato
-- ✅ **Arquitectura modular** separando core, comandos y utilidades
-- ✅ **Documentación completa** con Doxygen y guías de usuario
+- ✅ **Shell interactiva** con bucle REPL (Read-Eval-Print-Loop) completo
+- ✅ **10 comandos funcionales** con sintaxis Unix-like (list, read, create, remove, stats, time, calc, history, help, exit)
+- ✅ **Sistema de historial** con buffer circular para últimos 10 comandos (aritmética modular)
+- ✅ **Interfaz de usuario mejorada** con códigos ANSI para colores y formato profesional
+- ✅ **Arquitectura modular** separando core, comandos y utilidades (principios SOLID)
+- ✅ **Funciones helper reutilizables** para formateo de archivos, validación y manejo de errores
+- ✅ **Confirmaciones de seguridad** en comandos destructivos (remove con preview interactivo)
+- ✅ **Documentación completa** con Doxygen, README profesional y CHANGELOG versionado
 
 ## Comandos Disponibles
 
@@ -72,6 +75,29 @@ El comando `stats` utiliza la syscall POSIX `stat()` para obtener información c
 - Permisos en notación octal (ej: 0644, 0755)
 - Número de inodo y enlaces duros
 - Fechas: última modificación, último acceso, cambio de metadatos
+
+### Funciones Helper Reutilizables (utils.h)
+
+El módulo `helpers.c` proporciona funciones comunes siguiendo el principio DRY:
+- **`formatear_tamano()`**: Convierte bytes a formato legible (KB/MB/GB) automáticamente
+- **`formatear_fecha()`**: Formatea timestamps UNIX a formato dd/mm/yyyy hh:mm:ss
+- **`validar_argumento()`**: Valida argumentos de comandos con mensajes de error consistentes
+- **`archivo_existe()`**: Verifica existencia de archivos usando stat() eficientemente
+
+### Confirmaciones de Seguridad
+
+El comando `remove` implementa confirmación interactiva antes de operaciones destructivas:
+- Muestra información del archivo (tamaño, fecha de modificación)
+- Requiere confirmación explícita (y/n)
+- Usa colores para destacar advertencias
+- Previene eliminaciones accidentales
+
+### Manejo Robusto de Errores
+
+- Validación de argumentos en todos los comandos
+- Mensajes de error descriptivos con `perror()` para errores del sistema
+- Verificación de valores de retorno de syscalls (fopen, stat, remove, etc.)
+- Códigos de color para distinguir errores, éxitos e información
 
 
 ## Inicio Rápido
@@ -159,4 +185,5 @@ Este proyecto es de código abierto bajo la licencia MIT. Ver archivo `LICENSE` 
 
 **Curso**: Sistemas Operativos  
 **Universidad**: EAFIT  
+**Profesor**: Edison Valencia
 **Fecha**: Febrero 2026
