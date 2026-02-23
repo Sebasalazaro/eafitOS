@@ -185,5 +185,5 @@ Este proyecto es de código abierto bajo la licencia MIT. Ver archivo `LICENSE` 
 
 **Curso**: Sistemas Operativos  
 **Universidad**: EAFIT  
-**Profesor**: Edison Valencia
+**Profesor**: Edison Valencia  
 **Fecha**: Febrero 2026
